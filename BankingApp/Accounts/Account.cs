@@ -1,6 +1,7 @@
 using System;
 using BankingApp.Common;
 using BankingApp.Utilities;
+using BankingApp.Entity;
 
 namespace BankingApp.Accounts
 {
@@ -11,11 +12,11 @@ namespace BankingApp.Accounts
         public decimal MinimumBalance;
         public decimal MaximumBalance;
         public bool IsActive { get; private set; }
-        public string UserID { get; private set; }
+        public User Owner { get; private set; }
 
-        public Account(string userID) {
+        public Account(User user) {
             ID = UniqueIdGenerator.GenerateNewId();
-            UserID = userID;
+            Owner = user;
             IsActive = true;
             MinimumBalance = AccountInfo.GeneralAccountMinBalance;
             MaximumBalance = AccountInfo.GeneralAccountMaxBalance;

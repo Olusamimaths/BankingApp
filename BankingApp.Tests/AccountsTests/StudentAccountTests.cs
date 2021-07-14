@@ -3,18 +3,19 @@ using Xunit;
 using BankingApp.Roles;
 using BankingApp.Common;
 using BankingApp.Accounts;
+using BankingApp.Entity;
 
 namespace BankingApp.Tests.AccountsTests
 {
     public class StudentAccountTests
     {
         const string ID = "1234";
-        const string ID2 = "567";
+        User user1 = new User("Sam", "Tobi");
+
         [Fact]
         public void Creates_Student_Account()
         {
-            StudentAccount stAccount = new StudentAccount(ID, ID2);
-            Assert.True(stAccount.UserID.GetType() == typeof(string));
+            StudentAccount stAccount = new StudentAccount(user1, ID);
             Assert.True(stAccount.GetID().GetType() == typeof(string));
         }
     }

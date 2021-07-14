@@ -1,4 +1,5 @@
 using BankingApp.Utilities;
+using BankingApp.Entity;
 
 namespace BankingApp.Accounts
 {
@@ -6,7 +7,7 @@ namespace BankingApp.Accounts
     {
         public decimal OverDraft { get; private set; }
         
-        public CurrentAccount(string userID) : base(userID) {
+        public CurrentAccount(User user) : base(user) {
             this.MinimumBalance = AccountInfo.CurrentAccountMinBalance;
             this.MaximumBalance = AccountInfo.CurrentAccountMaxBalance;
         }

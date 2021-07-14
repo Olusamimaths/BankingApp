@@ -1,4 +1,5 @@
 using BankingApp.Utilities;
+using BankingApp.Entity;
 
 namespace BankingApp.Accounts
 {
@@ -6,7 +7,7 @@ namespace BankingApp.Accounts
     {
         public float InterestRatio { get; private set; }
         public bool IsZeroBalance { get; private set; }
-        public SavingsAccount(string userID) : base(userID) {
+        public SavingsAccount(User user) : base(user) {
             this.MinimumBalance = AccountInfo.SavingsAccountMinBalance;
             this.MaximumBalance = AccountInfo.SavingsAccountMaxBalance;
         }
