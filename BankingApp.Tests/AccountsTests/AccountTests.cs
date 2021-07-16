@@ -2,37 +2,70 @@ using System;
 using Xunit;
 using BankingApp.Accounts; 
 using BankingApp.Utilities;
+using BankingApp.Entity;
 
 namespace BankingApp.Tests.AccountsTests
 {
     public class AccountTests
     {
-        const string ID = "1234";
-        const string ID2 = "567";
+        User user1 = new User("Sam", "Tobi");
+        User user2 = new User("Sam", "Tobi");
 
         [Fact]
-        public void Creates_ID_For_Account()
+        public void Creates_Account_With_ID()
         {
-            Account account = new Account(ID);
+            Account account = new Account(user1);
             string accountID = account.GetID();
             Assert.True(accountID.GetType() == typeof(string));
         }
 
         [Fact]
+        public void Generates_Account_Number_For_Account()
+        {
+            Account account = new Account(user1);
+            long bankNumber = account.GetAccountNumber();
+            Assert.True(bankNumber.GetType() == typeof(long));
+        }
+
+        [Fact]
+        public void Generates_10_Account_Number_For_Account()
+        {
+            Account account = new Account(user1);
+            long bankNumber = account.GetAccountNumber();
+            Assert.True(bankNumber.ToString().Length == 10);
+        }
+
+        [Fact]
+        public void Creates_Account_With_Zero_Amount()
+        {
+            decimal defaultBalance = 0;
+            Account account = new Account(user1);
+            Assert.Equal(account.GetBalance(), defaultBalance);
+        }
+
+        [Fact]
+        public void Creates_Account_With_Starting_Amount()
+        {
+            decimal amount = 5000;
+            Account account = new Account(user1, 5000);
+            Assert.Equal(account.GetBalance(), amount);
+        }
+
+        [Fact]
         public void Links_User_Id_To_Account()
         {
-            Account account = new Account(ID);
-            string userID = account.UserID;
-            Assert.True(userID == ID);
+            Account account = new Account(user1);
+            User owner = account.Owner;
+            Assert.True(owner == user1);
         }
 
         [Fact]
         public void AccountIDs_Must_Be_Unique()
         {
-            Account account = new Account(ID);
+            Account account = new Account(user1);
             string accountID = account.GetID();
 
-            Account account2 = new Account(ID2);
+            Account account2 = new Account(user2);
             string accountID2 = account2.GetID();
 
             Assert.NotEqual(accountID, accountID2);
@@ -41,21 +74,21 @@ namespace BankingApp.Tests.AccountsTests
         [Fact]
         public void Account_Is_Active_By_Default()
         {
-            Account account = new Account(ID);
+            Account account = new Account(user1);
             Assert.True(account.IsActive);
         }
         
         [Fact]
         public void Set_Balance_To_Zero_By_Default()
         {
-            Account account = new Account(ID);
+            Account account = new Account(user1);
             Assert.True(account.GetBalance() == 0);
         }
 
         [Fact]
         public void Sets_Minimum_Balance_By_Default()
         {
-            Account account = new Account(ID);
+            Account account = new Account(user1);
             Assert.Equal(account.MinimumBalance, AccountInfo.GeneralAccountMinBalance);
             
         }
@@ -63,7 +96,7 @@ namespace BankingApp.Tests.AccountsTests
         [Fact]
         public void Sets_Maximum_Balance_By_Default()
         {
-            Account account = new Account(ID);
+            Account account = new Account(user1);
             Assert.Equal(account.MaximumBalance, AccountInfo.GeneralAccountMaxBalance);
          
         }
@@ -71,7 +104,7 @@ namespace BankingApp.Tests.AccountsTests
         [Fact]
         public void Adds_To_Account_Balance()
         {
-            Account account = new Account(ID);
+            Account account = new Account(user1);
             Assert.True(account.GetBalance() == 0);
 
             account.DepositOrThrow(1000);
@@ -82,7 +115,7 @@ namespace BankingApp.Tests.AccountsTests
         [Fact]
         public void Withdraws_From_Account_Balance()
         {
-            Account account = new Account(ID);
+            Account account = new Account(user1);
             account.DepositOrThrow(5000);
             account.WithdrawOrThrow(400);
 
@@ -92,7 +125,7 @@ namespace BankingApp.Tests.AccountsTests
         [Fact]
         public void Throws_Exception_If_No_Previous_Deposit()
         {
-            Account account = new Account(ID);
+            Account account = new Account(user1);
 
             var ex = Assert.Throws<Exception>(() => account.WithdrawOrThrow(100));
             Assert.Equal(ex.Message, ErrorMessages.InsufficientBalance);
@@ -101,7 +134,7 @@ namespace BankingApp.Tests.AccountsTests
         [Fact]
         public void Throws_Exception_If_Insufficient_Balance()
         {
-            Account account = new Account(ID);
+            Account account = new Account(user1);
             account.DepositOrThrow(40);
 
             var ex = Assert.Throws<Exception>(() => account.WithdrawOrThrow(100));
@@ -111,7 +144,7 @@ namespace BankingApp.Tests.AccountsTests
         [Fact]
         public void Throws_Exception_If_Negative_Amount_For_Deposit()
         {
-            Account account = new Account(ID);
+            Account account = new Account(user1);
 
             var ex = Assert.Throws<Exception>(() => account.DepositOrThrow(-100));
             Assert.Equal(ex.Message, ErrorMessages.InvalidAmount);
@@ -120,7 +153,7 @@ namespace BankingApp.Tests.AccountsTests
         [Fact]
         public void Throws_Exception_If_Negative_Amount_For_Withdrawal()
         {
-            Account account = new Account(ID);
+            Account account = new Account(user1);
             account.DepositOrThrow(1000);
 
             var ex = Assert.Throws<Exception>(() => account.WithdrawOrThrow(-100));
@@ -130,7 +163,7 @@ namespace BankingApp.Tests.AccountsTests
         [Fact]
         public void Deactivates_Account_When_Max_Balance_Exceeded()
         {
-            Account account = new Account(ID);
+            Account account = new Account(user1);
             Assert.True(account.IsActive);
             
             account.DepositOrThrow(AccountInfo.GeneralAccountMaxBalance);
@@ -141,7 +174,7 @@ namespace BankingApp.Tests.AccountsTests
         [Fact]
         public void Withdrawal_Fails_When_Min_Balance_Will_Be_Exceeded()
         {
-            Account account = new Account(ID);
+            Account account = new Account(user1);
             
             account.DepositOrThrow(AccountInfo.GeneralAccountMinBalance);
             account.WithdrawOrThrow(200);
@@ -152,11 +185,33 @@ namespace BankingApp.Tests.AccountsTests
         [Fact]
         public void Deactivates_Account()
         {
-            Account account = new Account(ID);
+            Account account = new Account(user1);
             Assert.True(account.IsActive);
 
             account.DeactivateAccount();
             Assert.False(account.IsActive);
+        }
+        
+        [Fact]
+        public void Deposit_Fails_If_Account_Is_Not_Active()
+        {
+            Account account = new Account(user1);
+            account.DeactivateAccount();
+            
+            var ex = Assert.Throws<Exception>(() => account.DepositOrThrow(200));
+            Assert.Equal(ex.Message, ErrorMessages.AccountDeactivated);
+        }
+        
+        [Fact]
+        public void Withdraw_Fails_If_Account_Is_Not_Active()
+        {
+            Account account = new Account(user1);
+            account.DepositOrThrow(5000);
+
+            account.DeactivateAccount();
+
+            var ex = Assert.Throws<Exception>(() => account.WithdrawOrThrow(400));
+            Assert.Equal(ex.Message, ErrorMessages.AccountDeactivated);
         }
     }
 }
