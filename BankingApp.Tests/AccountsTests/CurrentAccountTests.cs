@@ -9,12 +9,29 @@ namespace BankingApp.Tests.AccountsTests
     public class CurrentAccountTests
     {
         User user1 = new User("Sam", "Tobi");
+        decimal amount = 1000;
+        
 
         [Fact]
         public void Creates_Current_Account()
         {
             CurrentAccount currentAccount = new CurrentAccount(user1);
             Assert.True(currentAccount.GetID().GetType() == typeof(string));
+        }
+
+        
+        [Fact]
+        public void Creates_Current_Account_With_Zero_Starting_Amount()
+        {
+            CurrentAccount stAccount = new CurrentAccount(user1);
+            Assert.True(stAccount.GetBalance() == 0);
+        }
+
+        [Fact]
+        public void Creates_Current_Account_With_Starting_Amount()
+        {
+            CurrentAccount stAccount = new CurrentAccount(user1, amount);
+            Assert.True(stAccount.GetBalance() == amount);
         }
 
         [Fact]

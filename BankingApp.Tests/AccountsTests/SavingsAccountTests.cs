@@ -12,11 +12,27 @@ namespace BankingApp.Tests.AccountsTests
     public class SavingsAccountTests
     {
         User user1 = new User("Sam", "Tobi");
+        decimal amount = 1000;
+        
         [Fact]
         public void Creates_Savings_Account()
         {
             SavingsAccount savingsAccount = new SavingsAccount(user1);
             Assert.True(savingsAccount.GetID().GetType() == typeof(string));
+        }
+
+        [Fact]
+        public void Creates_Savings_Account_With_Zero_Starting_Amount()
+        {
+            SavingsAccount stAccount = new SavingsAccount(user1);
+            Assert.True(stAccount.GetBalance() == 0);
+        }
+
+        [Fact]
+        public void Creates_Savings_Account_With_Starting_Amount()
+        {
+            SavingsAccount stAccount = new SavingsAccount(user1, amount);
+            Assert.True(stAccount.GetBalance() == amount);
         }
 
         

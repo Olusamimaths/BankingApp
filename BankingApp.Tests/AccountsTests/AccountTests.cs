@@ -12,11 +12,43 @@ namespace BankingApp.Tests.AccountsTests
         User user2 = new User("Sam", "Tobi");
 
         [Fact]
-        public void Creates_ID_For_Account()
+        public void Creates_Account_With_ID()
         {
             Account account = new Account(user1);
             string accountID = account.GetID();
             Assert.True(accountID.GetType() == typeof(string));
+        }
+
+        [Fact]
+        public void Generates_Account_Number_For_Account()
+        {
+            Account account = new Account(user1);
+            long bankNumber = account.GetAccountNumber();
+            Assert.True(bankNumber.GetType() == typeof(long));
+        }
+
+        [Fact]
+        public void Generates_10_Account_Number_For_Account()
+        {
+            Account account = new Account(user1);
+            long bankNumber = account.GetAccountNumber();
+            Assert.True(bankNumber.ToString().Length == 10);
+        }
+
+        [Fact]
+        public void Creates_Account_With_Zero_Amount()
+        {
+            decimal defaultBalance = 0;
+            Account account = new Account(user1);
+            Assert.Equal(account.GetBalance(), defaultBalance);
+        }
+
+        [Fact]
+        public void Creates_Account_With_Starting_Amount()
+        {
+            decimal amount = 5000;
+            Account account = new Account(user1, 5000);
+            Assert.Equal(account.GetBalance(), amount);
         }
 
         [Fact]
@@ -158,6 +190,28 @@ namespace BankingApp.Tests.AccountsTests
 
             account.DeactivateAccount();
             Assert.False(account.IsActive);
+        }
+        
+        [Fact]
+        public void Deposit_Fails_If_Account_Is_Not_Active()
+        {
+            Account account = new Account(user1);
+            account.DeactivateAccount();
+            
+            var ex = Assert.Throws<Exception>(() => account.DepositOrThrow(200));
+            Assert.Equal(ex.Message, ErrorMessages.AccountDeactivated);
+        }
+        
+        [Fact]
+        public void Withdraw_Fails_If_Account_Is_Not_Active()
+        {
+            Account account = new Account(user1);
+            account.DepositOrThrow(5000);
+
+            account.DeactivateAccount();
+
+            var ex = Assert.Throws<Exception>(() => account.WithdrawOrThrow(400));
+            Assert.Equal(ex.Message, ErrorMessages.AccountDeactivated);
         }
     }
 }

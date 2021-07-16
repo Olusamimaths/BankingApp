@@ -1,4 +1,5 @@
 ﻿using System;
+using BankingApp.Flows;
 
 namespace BankingApp
 {
@@ -6,7 +7,7 @@ namespace BankingApp
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World");
+            AccountFlow.StartUp();
         }
     }
 }

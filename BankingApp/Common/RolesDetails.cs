@@ -1,5 +1,8 @@
 namespace BankingApp.Common
 {
+     /// <summary>
+     /// Holds strings representing role titles of users
+     /// </summary>
     public static class RolesTitle
     {
          public const string Customer = "Customer";
@@ -7,6 +10,9 @@ namespace BankingApp.Common
          public const string Employee = "Employee";
     }
 
+     /// <summary>
+     /// Holds strings representing roles' description
+     /// </summary>
     public static class RolesDescription
     {
          public const string Customer = "Regular Customer";
