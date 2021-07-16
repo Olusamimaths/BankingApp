@@ -3,8 +3,15 @@ using BankingApp.Entity;
 
 namespace BankingApp.Accounts
 {
+    /// <summary>
+    /// Represent a current account class
+    /// </summary>
     public class CurrentAccount : Account
     {
+        /// <summary>
+        /// Amount that has been overdrawn on the current account
+        /// </summary>
+        /// <value></value>
         public decimal OverDraft { get; private set; }
 
         private void Init() {

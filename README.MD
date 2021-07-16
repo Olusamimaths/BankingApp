@@ -1,6 +1,8 @@
 # Banking App
-This project was developed following TDD, expecially has outlined by Bob Martin (Uncle Bob).
-Red-Green-Refactor.
+This project was developed following TDD, especially has outlined by Bob Martin (Uncle Bob). Red-Green-Refactor.
+
+Took this an opportunity to finally learn TDD.
+
 
 ## Running app
 `cd ./BankingApp` then run `dotnet run`

@@ -3,6 +3,9 @@ using BankingApp.Utilities;
 
 namespace BankingApp.Accounts
 {
+    /// <summary>
+    /// Represents a student account
+    /// </summary>
     public class StudentAccount : Account
     {
 

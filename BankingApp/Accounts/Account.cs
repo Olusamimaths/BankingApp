@@ -5,6 +5,9 @@ using BankingApp.Entity;
 
 namespace BankingApp.Accounts
 {
+    /// <summary>
+    /// Represents base account object
+    /// </summary>
     public class Account : BasicEntity
     {
         private string ID;

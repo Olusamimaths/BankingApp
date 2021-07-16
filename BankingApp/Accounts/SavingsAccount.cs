@@ -3,6 +3,9 @@ using BankingApp.Entity;
 
 namespace BankingApp.Accounts
 {
+    /// <summary>
+    /// Represents a Savings Account class
+    /// </summary>
     public class SavingsAccount : Account
     {
         /// <summary>
