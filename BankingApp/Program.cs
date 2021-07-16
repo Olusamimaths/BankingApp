@@ -7,7 +7,7 @@ namespace BankingApp
     {
         static void Main(string[] args)
         {
-            AccountFlow.StartUp();
+            AppFlow.StartUp();
         }
     }
 }

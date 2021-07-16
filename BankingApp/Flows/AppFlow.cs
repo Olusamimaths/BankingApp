@@ -6,7 +6,10 @@ using BankingApp.Transactions;
 
 namespace BankingApp.Flows
 {
-    public class AccountFlow
+    /// <summary>
+    /// Defines the flow of the application
+    /// </summary>
+    public class AppFlow
     {
         private static Account CurrentUserAccount;
         
@@ -212,6 +215,7 @@ namespace BankingApp.Flows
             else
             {
                 PrintDarkGreenText("Your account balance is " + foundAccount.GetBalance());
+                StartUp();
             }
 
         }
@@ -271,7 +275,7 @@ namespace BankingApp.Flows
 
             decimal startingAmount = 0;
 
-            if (input == "Y")
+            if (input == "Y" || input == "y")
             {
                 Console.Write("\n\n> Input starting amount: ");
                 startingAmount = Convert.ToDecimal(Console.ReadLine());

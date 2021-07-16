@@ -7,7 +7,7 @@ using BankingApp.Accounts;
 
 namespace BankingApp.Tests.FlowsTests
 {
-    public class AccountFlowTests
+    public class AppFlowTests
     {
         User user1 = new User("Sam", "Tobi");
 
@@ -24,7 +24,7 @@ namespace BankingApp.Tests.FlowsTests
             accounts.Add(new Account(user1));
             accounts.Add(acc);
 
-            Account foundAccount = AccountFlow.FindAccountByAccountNumber(accounts, acc.GetAccountNumber());
+            Account foundAccount = AppFlow.FindAccountByAccountNumber(accounts, acc.GetAccountNumber());
             Assert.True(foundAccount.GetAccountNumber() == acc.GetAccountNumber());
         }
 
@@ -40,7 +40,7 @@ namespace BankingApp.Tests.FlowsTests
             accounts.Add(new Account(user1));
             accounts.Add(new Account(user1));
 
-            Account foundAccount = AccountFlow.FindAccountByAccountNumber(accounts, acc.GetAccountNumber());
+            Account foundAccount = AppFlow.FindAccountByAccountNumber(accounts, acc.GetAccountNumber());
             Assert.True(foundAccount == null);
         }
     }
