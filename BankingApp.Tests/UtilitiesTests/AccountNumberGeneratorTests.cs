@@ -11,14 +11,16 @@ namespace BankingApp.Tests.UtilitiesTests
     public class AccountNumberGeneratorTests
     {
         [Fact]
-        public void Generates_10_Digits_Bank_Number() {
+        public void Generates_10_Digits_Bank_Number()
+        {
             long bankNumber = AccountNumberGenerator.Generate();
             Assert.True(bankNumber.GetType() == typeof(long));
             Assert.True(bankNumber.ToString().Length == 10);
         }
 
         [Fact]
-        public void Generated_Bank_Number_Must_Begin_With_Bank_Prefix() {
+        public void Generated_Bank_Number_Must_Begin_With_Bank_Prefix()
+        {
             long bankNumber = AccountNumberGenerator.Generate();
             long prefix = bankNumber / (long)Math.Pow(10, 8);
 
@@ -28,11 +30,13 @@ namespace BankingApp.Tests.UtilitiesTests
         [Fact]
         public void Returns_List_Of_10_digits_Numbers()
         {
-            for(int i = 0; i < 10; i++) {
+            for (int i = 0; i < 10; i++)
+            {
                 AccountNumberGenerator.Generate();
             }
             ReadOnlyCollection<long> bankNumbers = AccountNumberGenerator.GetAllBankNumbers();
-            foreach(long bankNumber in bankNumbers) {
+            foreach (long bankNumber in bankNumbers)
+            {
                 Assert.True(bankNumber.ToString().Length == 10);
             }
         }
@@ -40,13 +44,17 @@ namespace BankingApp.Tests.UtilitiesTests
         [Fact]
         public void BankNumbersList_Contains_Unique_Elements()
         {
+            for (int i = 0; i < 100; i++)
+            {
+                AccountNumberGenerator.Generate();
+            }
             ReadOnlyCollection<long> bankNumbers = AccountNumberGenerator.GetAllBankNumbers();
-            
+
             List<long> list = new List<long>(bankNumbers);
             bool isUnique = list.Distinct().Count() == bankNumbers.Count();
-            
+
             Assert.True(isUnique);
         }
-        
+
     }
 }

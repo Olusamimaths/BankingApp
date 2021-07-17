@@ -30,20 +30,22 @@ namespace BankingApp.Utilities
         /// 10 digits unique account number generator
         /// </summary>
         /// <returns>10 digit account number</returns>
-        public static long Generate() {
+        public static long Generate()
+        {
             long bankNumber = random.Next(LowerBound, UpperBound);
+            // add random eight digit number to 2200000000
             bankNumber = bankNumber + BaseBankNumber;
             // Continue to generate more numbers if current bankNumber has been generated before
-            while(bankNumbers.Contains(bankNumber)) bankNumber = random.Next(0, 8);
-            // add random eight digit number to 2200000000
+            while (bankNumbers.Contains(bankNumber)) bankNumber = BaseBankNumber + random.Next(LowerBound, UpperBound);
             return bankNumber;
         }
-        
+
         /// <summary>
         /// Gets a read-only collection of all the account numbers that have been generated
         /// </summary>
         /// <returns>Read-only collection of all account numbers</returns>
-        public static ReadOnlyCollection<long> GetAllBankNumbers() {
+        public static ReadOnlyCollection<long> GetAllBankNumbers()
+        {
             return new ReadOnlyCollection<long>(bankNumbers);
         }
     }
