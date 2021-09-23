@@ -1,7 +1,7 @@
 # Banking App
 This project was developed following TDD, especially has outlined by Bob Martin (Uncle Bob). Red-Green-Refactor.
 
-Took this an opportunity to finally learn TDD.
+I Took this project (Assigned by a Lecture in my University) as an opportunity to learn TDD properly.
 
 
 ## Running app
